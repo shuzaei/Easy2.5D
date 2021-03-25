@@ -1,20 +1,20 @@
 {
   "files": {
     "main.css": "/Easy2.5D/static/css/main.eb577b1f.chunk.css",
-    "main.js": "/Easy2.5D/static/js/main.82317e03.chunk.js",
-    "main.js.map": "/Easy2.5D/static/js/main.82317e03.chunk.js.map",
+    "main.js": "/Easy2.5D/static/js/main.f7dbb047.chunk.js",
+    "main.js.map": "/Easy2.5D/static/js/main.f7dbb047.chunk.js.map",
     "runtime-main.js": "/Easy2.5D/static/js/runtime-main.6d7118a1.js",
     "runtime-main.js.map": "/Easy2.5D/static/js/runtime-main.6d7118a1.js.map",
-    "static/js/2.06adc2fe.chunk.js": "/Easy2.5D/static/js/2.06adc2fe.chunk.js",
-    "static/js/2.06adc2fe.chunk.js.map": "/Easy2.5D/static/js/2.06adc2fe.chunk.js.map",
+    "static/js/2.268c43fe.chunk.js": "/Easy2.5D/static/js/2.268c43fe.chunk.js",
+    "static/js/2.268c43fe.chunk.js.map": "/Easy2.5D/static/js/2.268c43fe.chunk.js.map",
     "index.html": "/Easy2.5D/index.html",
     "static/css/main.eb577b1f.chunk.css.map": "/Easy2.5D/static/css/main.eb577b1f.chunk.css.map",
-    "static/js/2.06adc2fe.chunk.js.LICENSE.txt": "/Easy2.5D/static/js/2.06adc2fe.chunk.js.LICENSE.txt"
+    "static/js/2.268c43fe.chunk.js.LICENSE.txt": "/Easy2.5D/static/js/2.268c43fe.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.6d7118a1.js",
-    "static/js/2.06adc2fe.chunk.js",
+    "static/js/2.268c43fe.chunk.js",
     "static/css/main.eb577b1f.chunk.css",
-    "static/js/main.82317e03.chunk.js"
+    "static/js/main.f7dbb047.chunk.js"
   ]
 }
