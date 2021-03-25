@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -7,6 +7,23 @@ import Drawer from "@material-ui/core/Drawer";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import "./index.css";
+
+import none from "./img/none.png";
+import Z from "./img/Z.png";
+import T from "./img/T.png";
+import J from "./img/J.png";
+import I from "./img/I.png";
+import O from "./img/O.png";
+import S from "./img/S.png";
+import L from "./img/L.png";
+import Z2 from "./img/Z2.png";
+import T2 from "./img/T2.png";
+import J2 from "./img/J2.png";
+import I2 from "./img/I2.png";
+import O2 from "./img/O2.png";
+import S2 from "./img/S2.png";
+import L2 from "./img/L2.png";
+import Shade from "./img/Shade.png";
 
 function AddButton(props) {
   return (
@@ -19,44 +36,46 @@ function AddButton(props) {
   );
 }
 
-function createImageDataUrl(src, y, x, r) {
-  const canvas = document.createElement("canvas");
-  const ctx = canvas.getContext("2d");
-  canvas.width = r;
-  canvas.height = r;
-
-  let img = new Image();
-  img.src = src;
-  //img.onload = function () {
-  let YS = img.height / 3,
-    XS = img.width / 3;
-  ctx.drawImage(img, x * XS, y * YS, XS, YS, 0, 0, r, r);
-  // };
-  return canvas.toDataURL();
-}
-
 function Square(props) {
+  useEffect(() => {
+    props.images.forEach((elem, i) => {
+      const canvas = document.getElementById(`${props.name}+${i}`);
+      const ctx = canvas.getContext("2d");
+      canvas.width = props.r;
+      canvas.height = props.r;
+      let img = new Image();
+      img.src = elem.src;
+      img.onload = function () {
+        let YS = img.height / 3,
+          XS = img.width / 3;
+        ctx.drawImage(
+          img,
+          (elem.num % 3) * XS,
+          Math.floor(elem.num / 3) * YS,
+          XS,
+          YS,
+          0,
+          0,
+          props.r,
+          props.r
+        );
+      };
+    });
+  });
+
   return (
     <button className="square" onClick={props.onClick}>
-      {
-        <div className="pixel">
-          {props.images.map((img, i) => (
-            <img
-              key={i}
-              className="img"
-              src={createImageDataUrl(
-                img.src,
-                Math.floor(img.num / 3),
-                img.num % 3,
-                props.r
-              )}
-              alt=""
-              width={props.r}
-              height={props.r}
-            ></img>
-          ))}
-        </div>
-      }
+      <div className="pixel">
+        {props.images.map((img, i) => (
+          <canvas
+            key={i}
+            id={`${props.name}+${i}`}
+            className="img"
+            width={props.r}
+            height={props.r}
+          ></canvas>
+        ))}
+      </div>
     </button>
   );
 }
@@ -66,7 +85,7 @@ class Canvas extends React.Component {
     return (
       <Square
         key={i * this.props.sizeX + j}
-        name={(i * this.props.sizeX + j) * 30}
+        name={i * this.props.sizeX + j}
         images={imgs}
         onClick={() => this.props.onClick(i, j)}
         caption=""
@@ -195,7 +214,7 @@ class App extends React.Component {
       history: [
         {
           canvas: createCanvas(16, 16, 0),
-          processed: createCanvas2(16, 16, "img/none.png", 4),
+          processed: createCanvas2(16, 16, none, 4),
         },
       ],
       stepNumber: 0,
@@ -204,50 +223,76 @@ class App extends React.Component {
       colorSets: [
         {
           name: "default",
-          body: [
-            "img/none.png",
-            "img/Z.png",
-            "img/T.png",
-            "img/J.png",
-            "img/I.png",
-            "img/O.png",
-            "img/S.png",
-            "img/L.png",
-          ],
-          side: [
-            "img/none.png",
-            "img/Z2.png",
-            "img/T2.png",
-            "img/J2.png",
-            "img/I2.png",
-            "img/O2.png",
-            "img/S2.png",
-            "img/L2.png",
-          ],
-          shade: [
-            "img/none.png",
-            "img/Shade.png",
-            "img/Shade.png",
-            "img/Shade.png",
-            "img/Shade.png",
-            "img/Shade.png",
-            "img/Shade.png",
-            "img/Shade.png",
-          ],
+          body: [none, Z, T, J, I, O, S, L],
+          side: [none, Z2, T2, J2, I2, O2, S2, L2],
+          shade: [none, Shade, Shade, Shade, Shade, Shade, Shade, Shade],
         },
       ],
       selectColorSetNumber: 0,
       selectColorNumber: 1,
       sizeOfSquare: 36,
       showInitMenu: false,
+      tf_n: "",
+      tf_x: "",
+      tf_y: "",
     };
   }
   ShowInitMenu() {
     return (
       <div>
-        <TextField required id="fileName" label="ファイル名"></TextField>
-        <TextField required id="sizeX" label="サイズX"></TextField>
-        <TextField required id="sizeY" label="サイズY"></TextField>
+        <TextField
+          required
+          id="fileName"
+          label="ファイル名"
+          value={this.state.tf_n}
+          onChange={(event, value) => {
+            this.setState({ tf_n: event.target.value });
+          }}
+        ></TextField>
+        <TextField
+          required
+          id="sizeX"
+          label="サイズX"
+          value={this.state.tf_x}
+          onChange={(event, value) => {
+            this.setState({ tf_x: event.target.value });
+          }}
+        ></TextField>
+        <TextField
+          required
+          id="sizeY"
+          label="サイズY"
+          value={this.state.tf_y}
+          onChange={(event, value) => {
+            this.setState({ tf_y: event.target.value });
+          }}
+        ></TextField>
+        <Button
+          onClick={() => {
+            let X = isNaN(parseInt(this.state.tf_x))
+                ? 16
+                : parseInt(this.state.tf_x),
+              Y = isNaN(parseInt(this.state.tf_y))
+                ? 16
+                : parseInt(this.state.tf_y);
+            this.setState({
+              showInitMenu: false,
+              sizeX: X,
+              sizeY: Y,
+            });
+            this.setState({
+              history: [
+                {
+                  canvas: createCanvas(Y, X, 0),
+                  processed: createCanvas2(Y, X, none, 4),
+                },
+              ],
+              stepNumber: 0,
+            });
+          }}
+        >
+          作成
+        </Button>
       </div>
     );
   }
@@ -271,7 +316,7 @@ class App extends React.Component {
   setColor(i) {
     this.setState({ selectColorNumber: i });
   }
-  culcCanvas(canvas) {
+  culcCanvas(canvas, r) {
     const processed = createCanvas3(this.state.sizeY, this.state.sizeX);
     let dy = [0, 1, 1, 1, 0, -1, -1, -1],
       dx = [1, 1, 0, -1, -1, -1, 0, 1];
@@ -344,6 +389,7 @@ class App extends React.Component {
           ]);
       }
     }
+
     return processed;
   }
 
@@ -356,7 +402,9 @@ class App extends React.Component {
           anchor="top"
           open={this.state.showInitMenu}
           onClose={() => {
-            this.setState({ showInitMenu: false });
+            this.setState({
+              showInitMenu: false,
+            });
           }}
         >
           {this.ShowInitMenu()}
@@ -400,7 +448,7 @@ function createCanvas(Y, X, i) {
 function createCanvas2(Y, X, src, num) {
   var rows = new Array(Y);
   for (let y = 0; y < Y; y++) {
-    rows[y] = new Array(X).fill([{ src: src, num: 4 }]);
+    rows[y] = new Array(X).fill([{ src: src, num: num }]);
   }
   return rows;
 }
