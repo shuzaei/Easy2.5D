@@ -27,10 +27,11 @@ function createImageDataUrl(src, y, x, r) {
 
   let img = new Image();
   img.src = src;
+  //img.onload = function () {
   let YS = img.height / 3,
     XS = img.width / 3;
   ctx.drawImage(img, x * XS, y * YS, XS, YS, 0, 0, r, r);
-
+  // };
   return canvas.toDataURL();
 }
 
@@ -41,6 +42,7 @@ function Square(props) {
         <div className="pixel">
           {props.images.map((img, i) => (
             <img
+              key={i}
               className="img"
               src={createImageDataUrl(
                 img.src,
@@ -131,9 +133,9 @@ function Palette(props) {
         >
           {props.colorSets.map((colorSet, i) => (
             <MenuItem
+              key={i}
               onClick={() => {
                 handleClose();
-                console.log(i);
                 props.setPalette(i);
               }}
             >
@@ -169,9 +171,9 @@ function Palette(props) {
         >
           {props.colorSets[props.selectColorSetNumber].body.map((color, i) => (
             <MenuItem
+              key={i}
               onClick={() => {
                 handleClose2();
-                console.log(i);
                 props.setColor(i);
               }}
             >
@@ -262,11 +264,9 @@ class App extends React.Component {
     });
   }
   setPalette(i) {
-    console.log(i);
     this.setState({ selectColorSetNumber: i });
   }
   setColor(i) {
-    console.log(i);
     this.setState({ selectColorNumber: i });
   }
   culcCanvas(canvas) {
