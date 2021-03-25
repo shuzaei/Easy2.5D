@@ -159,6 +159,8 @@ function Palette(props) {
                 ]
               }
               alt=""
+              width={props.r}
+              height={props.r}
             ></img>
           }
         </Button>
@@ -177,7 +179,7 @@ function Palette(props) {
                 props.setColor(i);
               }}
             >
-              {<img src={color} alt=""></img>}
+              {<img src={color} alt="" width={props.r} height={props.r}></img>}
             </MenuItem>
           ))}
         </Menu>
@@ -368,6 +370,7 @@ class App extends React.Component {
           selectColorNumber={this.state.selectColorNumber}
           setPalette={(i) => this.setPalette(i)}
           setColor={(i) => this.setColor(i)}
+          r={this.props.sizeOfSquare}
         ></Palette>
         <div className="canvas">
           <Canvas
